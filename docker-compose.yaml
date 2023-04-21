@@ -1,0 +1,47 @@
+#
+#           ____      ____     __             __
+#          / __/_  __/ / /____/ /_____ ______/ /__
+#         / /_/ / / / / / ___/ __/ __ `/ ___/ //_/
+#       / __/ /_/ / / (__  ) /_/ /_/ / /__/ ,< ____
+#      /_/  \__,_/_/_/____/\__/\__, _/\___/_/|_/ / /__  ____ ____
+#                                  / ___/ __ \/ / / _ \/ __ `/ _ \
+#        we learn & earn 🚀      / /__/ /_/ / / /  __/ /_/ /  __/
+#    https://fullstack.college   \___/\____/_/_/\___/\__, /\___/
+#                                                   /____/
+#
+version: "3"
+
+services:
+  fullstack.college-postgresql:
+    container_name: fullstack.college-postgresql
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: fullstack.college
+      POSTGRES_PASSWORD: fullstack.college
+    networks:
+      - fullstack.college
+    ports:
+      - "5432:5432"
+    volumes:
+      - fullstack.college-postgresql:/var/lib/postgresql/data
+  fullstack.college-pgadmin:
+    image: dpage/pgadmin4
+    container_name: fullstack-pgadmin
+    depends_on:
+      - fullstack.college-postgresql
+    ports:
+      - "5050:80"
+    networks:
+      - fullstack.college
+    environment:
+      PGADMIN_DEFAULT_EMAIL: fullstack@fullstack.college
+      PGADMIN_DEFAULT_PASSWORD: fullstack
+    volumes:
+      - fullstack.college-pgadmin:/var/lib/pgadmin
+
+volumes:
+    fullstack.college-postgresql:
+    fullstack.college-pgadmin:
+
+networks:
+  fullstack.college:
